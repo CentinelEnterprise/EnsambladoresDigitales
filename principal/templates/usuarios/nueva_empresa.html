@@ -1,0 +1,87 @@
+{% extends 'dashboard/base_autenticado.html' %}
+
+{% block extra_head %}
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+{% endblock %}
+
+{% block navegacion %}
+	<a href="{% url 'administracion_empresas' %}" class="text-muted"  data-toggle="tooltip" data-placement="top" title="Volver"><i class="fa fa-arrow-left"></i></a>
+{% endblock %}
+{% block contenido %}
+	{% include "dashboard/alertas.html" %}		
+     <div id="page-wrapper">
+          <div class="row">
+            <br>
+            <div class="col-md-8 text-left">
+                <a href="{% url 'administracion_empresas' %}"><button  class="btn btn-dark"><span class="fa fa-arrow-left"></span> Atras </button></a>
+            </div>             
+          </div>
+          <div class="row">
+              <div class="col-lg-12">
+                  <h1 class="page-header">Crear Nueva empresa</h1>
+              </div>
+              <!-- /.col-lg-12 -->
+          </div>
+          <!-- /.row -->
+          <div class="row">
+              <div class="col-lg-12">
+                <form class="formulario" role="form" method="POST">{% csrf_token %}
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          Informacion De La Nueva Empresa
+                      </div>
+                      <div class="panel-body">
+                          <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="identificacion">Identificación</label>
+                                  <input type="text" class="form-control numeric" id="identificacion" name="identificacion" {% if modificar %} value="{{ mod_empresa.identificacion_empresa }}"  {% endif %} required>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="razon">Razon Social</label>
+                                  <input type="text" class="form-control" id="razon" name="razon" {% if modificar %} value="{{ mod_empresa.razon_social_empresa }}"  {% endif %} required>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="comercial">Nombre Comercial</label>
+                            <input type="text" class="form-control" id="comercial" name="comercial" {% if modificar %} value="{{ mod_empresa.nombre_comercial_empresa }}"  {% endif %} required>
+                          </div>
+                          <div class="form-group">
+                            <label for="tipo">Tipo Empresa</label>
+                            <select class="form-control" id="tipo" name="tipo">
+                              <option></option>
+                              <option value="1">Sin Definir</option>
+                              <option value="2">Natural</option>
+                              <option value="3">Juridica</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="TextareaObservacion">Observaciones</label>
+                            <textarea class="form-control" id="TextareaObservacion" name="TextareaObservacion" rows="3"> {% if modificar %} {{ mod_empresa.observaciones_empresa }}  {% endif %} </textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- /.panel-body -->
+                      <div class="panel-footer">
+                        <button type="submit" class="btn btn-success"><span class="fas fa-save"></span> Guardar</button>
+                        <button type="reset" class="btn btn-info">Limpiar Formulario</button>
+                      </div>
+                  </div>
+                  <!-- /.panel -->
+                </form>
+              </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div> 
+	
+{% endblock %}
+
+{% block extra_js %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% if advertencia or ok or error %}
+	<div class="row">
+		<div class="col-md-12 text-center">
+			{% if advertencia %}
+				<div class="alert alert-warning fade in" role="alert">
+					<strong>Advertencia!</strong> {{ advertencia }}
+				</div>
+			{% endif %}
+			{% if error %}
+			<div class="alert alert-danger fade in" role="alert">
+				<button type="button" class="close" data-dismiss="alert">
+					<span aria-hidden="true">×</span>
+					<span class="sr-only">Cerrar</span>
+				</button>
+				<strong>Error!</strong> {{ error }}
+			</div>
+			{% else %}
+				{% if ok %}
+				<div class="alert alert-success fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert">
+						<span aria-hidden="true">×</span>
+						<span class="sr-only">Cerrar</span>
+					</button>
+					<strong>Exito!</strong> {{ ok }}
+				</div>
+				{% endif %}
+			{% endif %}
+		</div>
+	</div>
+{% endif %}

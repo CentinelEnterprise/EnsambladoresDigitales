@@ -1,0 +1,51 @@
+{% extends 'dashboard/base_autenticado.html' %}
+
+{% block titulo %}
+  Cambio Cantraseña 
+{% endblock %}
+
+{% block contenido %} 
+<div id="page-wrapper">   
+    <div class="container"><br>
+        <div class="row">
+            <div class="col-md-8 text-left">
+                <a href="{% url 'menu_aplicaciones' %}"><button  class="btn btn-dark"><span class="fa fa-arrow-left"></span> Atras </button></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Cambiar Contraseña</h3>
+                    </div>
+                    <div class="panel-body">
+                         {% include 'dashboard/alertas.html' %}
+                        <form role="form" method="POST" autocomplete="off">{% csrf_token %}
+                            <fieldset>
+                                <div class="form-group">
+                                    <label>Contraseña actual</label>
+                                    <input class="form-control" placeholder="Escribe la contraseña actual" name="clave_actual" id="clave_actual" type="password">
+                                </div>                               
+                                <hr>
+                                <div class="form-group">
+                                    <label>Nueva contraseña</label>
+                                    <input class="form-control" placeholder="Escribe la nueva contraseña" name="nue_contrasena" id="nue_contrasena" type="password">
+                                </div>
+                                <div class="form-group">
+                                    <label>Confirmar contraseña</label>
+                                    <input class="form-control" placeholder="Escribe nuevamente la contraseña" name="c_nueva_clave" id="c_nueva_clave" type="password">
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <!-- <a  class="btn btn-lg btn-success btn-block">Cambiar Contraseña</a> -->
+                                <button type="submit" class="btn btn-lg btn-success btn-block"><span class="fas fa-save"></span> Generar Cambio</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}    
+
+

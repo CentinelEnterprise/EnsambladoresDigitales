@@ -1,0 +1,265 @@
+{% block extra_head %}
+  <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/chosen.min.css"> -->
+{% endblock %}
+{% load humanize %}
+<div class="modal fade" id="modal_perfiles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <!-- <form class="formulario" role="form" method="POST">{% csrf_token %} -->
+  	<div class="modal-dialog modal-md">
+    	<div class="modal-content">        
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          {% if modificar %}
+            <h4 class="modal-title" id="myModalLabel">MODIFICAR EMPRESA</h4> 
+          {% elif detalles_m %}
+            <h4 class="modal-title" id="myModalLabel">DETALLES EMPRESA</h4>
+          {% elif eliminar_m %}
+            <h4 class="modal-title" id="myModalLabel">ELIMINAR EMPRESA</h4>
+          {% elif reactivar_m %}
+            <h4 class="modal-title" id="myModalLabel">REACTIVAR EMPRESA</h4>
+          {% endif %}  
+        </div>
+        <div class="modal-body" id="modal-body-contactos">              
+          {% if modificar %}               
+            <div class="row">
+              <div class="col-lg-12">
+                <form class="formulario" role="form" method="POST">{% csrf_token %}
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          Informacion De La Nueva Empresa
+                      </div>
+                      <div class="panel-body">
+                          <div class="row">
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="identificacion">Identificación</label>
+                                  <input type="text" class="form-control numeric" id="identificacion" name="identificacion" {% if modificar %} value="{{ mod_empresa.identificacion_empresa }}"  {% endif %} required>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                  <label for="razon">Razon Social</label>
+                                  <input type="text" class="form-control" id="razon" name="razon" {% if modificar %} value="{{ mod_empresa.razon_social_empresa }}"  {% endif %} required>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="comercial">Nombre Comercial</label>
+                                <input type="text" class="form-control" id="comercial" name="comercial" {% if modificar %} value="{{ mod_empresa.nombre_comercial_empresa }}"  {% endif %} required>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="tipo">Tipo Empresa</label>
+                                <select class="form-control" id="tipo" name="tipo">
+                                  <option></option>
+                                  <option {% if modificar %} {% if mod_empresa.tipo_empresa == 1 %}  selected="True" {% endif %} {% endif %} value="1">Sin Definir</option>
+                                  <option {% if modificar %} {% if mod_empresa.tipo_empresa == 2 %}  selected="True" {% endif %} {% endif %} value="2">Natural</option>
+                                  <option {% if modificar %} {% if mod_empresa.tipo_empresa == 3 %}  selected="True" {% endif %} {% endif %} value="3">Juridica</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <label for="TextareaObservacion">Observaciones</label>
+                            <textarea class="form-control" id="TextareaObservacion" name="TextareaObservacion" rows="3">{% if modificar %}{{ mod_empresa.observaciones_empresa }}{% endif %}</textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <!-- <a id="agregar_registro" class="btn btn-success informe" accion="ingreso" name="guardar"><i class="fa fa-save"></i> Guardar</a> -->
+                        <a  class="btn btn-success modificar" accion="{{ mod_empresa.pk }}"><span class="fas fa-save"></span> Guardar</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_contacto_m" >Cerrar</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>               
+          {% elif detalles_m %}
+            <div class="row">
+                <div class="col-md-12">                    
+                  <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">IDENTIFICACIÓN</th>
+                          <th scope="col">RAZON SOCIAL</th>
+                          <th scope="col">FECHA REGISTRO</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ mod_empresa.identificacion_empresa}}</td>
+                          <td>{{ mod_empresa.razon_social_empresa|upper}}</td>
+                          <td>{{ mod_empresa.razon_social_empresa|upper}}</td>
+                        </tr>
+                      </tbody>
+                      <thead>
+                        <tr>
+                          <th scope="col">TIPO</th>
+                          <th scope="col">ESTADO</th>
+                          <th scope="col">OBSERVACIONES</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ mod_empresa.get_tipo_empresa_display }}</td>
+                          <td>{% if mod_empresa.activo %} Activa {% else %} Inactiva{% endif %}</td>
+                          <td>{{ mod_empresa.observaciones_empresa|upper}}</td>
+                        </tr>
+                      </tbody>
+                       <thead>
+                        <tr>
+                          <th scope="col">FECHA CREACION</th>
+                          <th scope="col">FECHA MODIFICACIÓN</th>
+                          <th scope="col">FECHA BAJA</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{% if mod_empresa.fecha_creacion %} {{ mod_empresa.fecha_creacion|date:"d/m/Y"}} {% else %} N.R {% endif %}</td>
+                          <td>{% if mod_empresa.fecha_modificacion %} {{ mod_empresa.fecha_modificacion|date:"d/m/Y"}} {% else %} N.R {% endif %}</td>
+                          <td>{% if mod_empresa.fecha_desactivacion %} {{ mod_empresa.fecha_desactivacion|date:"d/m/Y"}} {% else %} N.R {% endif %}</td>
+                        </tr>
+                      </tbody>                       
+                  </table>
+                  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Ver Proyectos
+                  </button><br><br>
+                  <div class="collapse" id="collapseExample" style="overflow-y: scroll;">
+                    <div class="card card-body" style="height: 200px;">
+                         <table width="100%" class="table  table-bordered table-hover" id="dataTables">
+                            <thead>
+                              <tr>
+                                <th>NOMBRE PROYECTO</th>
+                                <th>RESPONSABLE</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th><a href="{% url 'pagina_construccion' %}" target="_blank">Tintal Autopista (click para ver)</a></th>
+                                <th>Juan Perez</th>
+                              </tr>
+                              <tr>
+                                <th><a href="{% url 'pagina_construccion' %}" target="_blank">Tintal Autopista (click para ver)</a></th>
+                                <th>Juan Perez</th>
+                              </tr>
+                              <tr>
+                                <th><a href="{% url 'pagina_construccion' %}" target="_blank">Tintal Autopista (click para ver)</a></th>
+                                <th>Juan Perez</th>
+                              </tr>
+                              <tr>
+                                <th><a href="{% url 'pagina_construccion' %}">Tintal Autopista (click para ver)</a></th>
+                                <th>Juan Perez</th>
+                              </tr>
+                              <tr>
+                                <th><a href="{% url 'pagina_construccion' %}">Tintal Autopista (click para ver)</a></th>
+                                <th>Juan Perez</th>
+                              </tr>
+                              <tr>
+                                <th><a href="{% url 'pagina_construccion' %}">Tintal Autopista (click para ver)</a></th>
+                                <th>Juan Perez</th>
+                              </tr>
+                              <tr>
+                                <th><a href="{% url 'pagina_construccion' %}">Tintal Autopista (click para ver)</a></th>
+                                <th>Juan Perez</th>
+                              </tr>  
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
+              </div>
+            </div>            
+          </div>               
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_contacto_m" >Cerrar</button>
+          </div>
+          {% elif eliminar_m %}
+            <div class="row">
+              <div class="col-lg-12">
+                <form class="formulario" role="form" method="POST">{% csrf_token %}
+                  <div class="panel panel-default">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="alert alert-warning fade in col-md-12" role="alert">
+                            <strong>Advertencia!</strong> {{ advertencia }} {{ mod_empresa }}
+                          </div>
+                          <!-- <label class="text-center">Ingese la fecha de eliminacion la empresa</label> -->
+                          <!-- <input type="date" name="fecha" class="form-control"> -->
+                        </div>    
+                      </div>
+                      <div class="modal-footer">                       
+                        <a class="btn btn-danger" href="{% url 'eliminar_empresa' mod_empresa.pk %}"><span class="fas fa-save"></span> Guardar</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_contacto_m" >Cerrar</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% elif reactivar_m %}
+            <div class="row">
+              <div class="col-lg-12">
+                <form class="formulario" role="form" method="POST">{% csrf_token %}
+                  <div class="panel panel-default">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="alert alert-warning fade in col-md-12" role="alert">
+                            <strong>Advertencia!</strong> {{ advertencia }} {{ mod_empresa }}
+                          </div>
+                          <!-- <label class="text-center">Ingese la fecha de eliminacion del usuario</label> -->
+                          <!-- <input type="date" name="fecha" class="form-control"> -->
+                        </div>    
+                      </div>
+                      <div class="modal-footer">                       
+                        <a class="btn btn-danger" href="{% url 'reactivar_empresa' mod_empresa.pk %}"><span class="fas fa-save"></span> Guardar</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_contacto_m" >Cerrar</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          {% endif %}                
+    	</div>
+  	</div>
+  <!-- </form> -->
+</div>
+
+{% block extra_js %}
+
+
+<script type="text/javascript">
+  $(".modificar").on("click",function(){
+    var aux_accion = $(this).attr("accion");
+    console.log("mire las variables,"+aux_accion);
+    $.ajax({
+      type:"POST",         
+      url:"/usuarios/modificar_empresa/{{ mod_empresa.pk }}/",
+      data:{ "accion_r":aux_accion,"identificacion":$("#identificacion").val(),"razon":$("#razon").val(),"comercial":$("#comercial").val(),"tipo":$("#tipo").val() ,"TextareaObservacion":$("#TextareaObservacion").val(),"csrfmiddlewaretoken": getCookie("csrftoken")},
+      success: function(resp){
+        var url_to = "http://"+window.location.host+resp;
+        window.location= url_to;
+      }
+    })
+  });
+
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+
+</script>
+{% endblock %}

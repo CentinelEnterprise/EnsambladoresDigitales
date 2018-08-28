@@ -1,0 +1,92 @@
+{% extends 'dashboard/base.html' %}
+
+
+{% block pre_contenido %}
+  <!-- nueva version plantilla abelardo--------------------------------------------------------------------------------------------------------- -->
+  
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'menu_aplicaciones' %}"><b>S I G I</b></a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown-user -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ request.user.username }} 
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="{% url 'ver_perfil_usuario' %}"><i class="fa fa-user fa-fw"></i> Perfil de Usuario</a>
+                        </li>
+                        <li><a href="{% url 'configuracion_usuarios'  %}"><i class="fa fa-gear fa-fw"></i> Configuración</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'cerrar_sesion_usuarios' %}"><i class="fa fa-user-times fa-fw"></i> Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Buscar...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-cogs fa-fw"></i> Gestión de Usuario<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">                                
+                                <li>
+                                    <a href="{% url 'administracion_perfiles' %}"><span class="fas fa-group"></span> Perfiles</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'administracion_empresas' %}" ><span class="fa fa-briefcase"></span> Empresas</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'administracion_grupos_usuarios' %}"><span class="fas fa-group"></span> Grupos y Permisos</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'administracion_usuarios' %}"><span class="fa fa-user-circle"></span> Usuarios</a>
+                                </li>                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="{% url 'pagina_construccion' %}"><i class="fa fa-table fa-fw"></i> Gestion de Proyectos</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'pagina_construccion' %}"><i class="fa fa-edit fa-fw"></i> Gestion de Resultados</a>
+                        </li><br><br>
+                        <li>
+                            <a href="{% url 'menu_aplicaciones' %}"><i class="fa fa-arrow-left"></i> regresar al menu Principal</a>                          
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>       
+
+  <!--  fin plantilla abelardo -->
+
+
+{% endblock %}  

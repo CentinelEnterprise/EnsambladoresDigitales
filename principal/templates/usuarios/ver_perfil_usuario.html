@@ -1,0 +1,80 @@
+{% extends 'dashboard/base_autenticado.html' %}
+
+{% block titulo %}
+  Ver Usuario 
+{% endblock %}
+
+{% block contenido %}
+<div id="page-wrapper">  
+    <div class="row">
+            <br>
+            <div class="col-md-8 text-left">
+                <a href="{% url 'menu_aplicaciones' %}"><button  class="btn btn-dark"><span class="fa fa-arrow-left"></span> Atras </button></a>
+            </div>
+        </div>
+    <!--Fin Botones-->
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron" style="padding: 30px;">
+              <div class="row">
+                  <div class="col-md-4 text-center">
+                      <img src="../../static/images/user_photo.jpeg" class="img-thumbnail" style="width: 180px; height: 190px;">
+                  </div>
+                  <div class="col-md-8">
+                      <!--Tabla de perfil de usario -->
+                      <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">LOGIN USUARIO</th>
+                              <th scope="col">NOMBRE USUARIO</th>
+                              <th scope="col">IDENTIFICACION</th>                              
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% if is_admin %}
+                              <tr>
+                                <td>admin</td>
+                                <td>SUPER USUARIO</td>
+                                <td>N.A</td>
+                              </tr>
+                            {% else %}
+                              <tr>
+                                <td>{{ usuario.usuario.username }}</td>
+                                <td>{{ usuario.nombre|upper }}</td>
+                                <td>{{ usuario.identificacion|upper }}</td>
+                              </tr>
+                            {% endif %}  
+                          </tbody>
+                          <thead>
+                            <tr>  
+                              <th scope="col">EMPRESA</th>
+                              <th scope="col">PERFIL</th>
+                              <th scope="col">ESTADO</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% if is_admin %}
+                              <tr>
+                                <td>ENEL</td>
+                                <td>SUPER USUARIO</td>
+                                <td>N.A</td>
+                              </tr>
+                            {% else %}
+                                <td>{{ usuario.empresa.razon_social_empresa|upper }}</td>
+                                <td>{{ usuario.tipo_perfil.nombre_tipo_perfil|upper }}</td>
+                                <td>{% if usuario.activo %} ACTIVO {% else %} INACTIVO {% endif %}</td>                                
+                            {% endif %} 
+                          </tbody>
+                        </table>
+                      <!--Fin Tabla de perfil de usario -->
+                  </div>
+              </div>
+              <!-- <hr class="my-4">
+              <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+              <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

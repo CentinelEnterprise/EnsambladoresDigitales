@@ -1,0 +1,86 @@
+{% extends 'dashboard/base_nologin.html' %}
+{% load static %}
+
+{% block titulo %}
+ Recuperar Contraseña 
+{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block contenido %}
+  <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center"><b>RECUPERAR CONTRASEÑA</b></h3>
+                    </div>   
+                    {% include 'dashboard/alertas.html' %}
+                    
+                   <!--Acordeon-->
+                    <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#home" data-toggle="tab">Por Usuario</a>
+                                    </li>
+                                    <li><a href="#profile" data-toggle="tab">Por Numero de Identificación</a>
+                                    </li>
+                                </ul><br>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="home">
+                                    <form role="form" method="POST" autocomplete="off">{% csrf_token %}
+                                       <div class="form-group">
+                                            <label for="inputCorreo">Usuario</label>
+                                            <input  type="text" class="form-control" id="usu_recuperacion_usr" name="usu_recuperacion_usr" placeholder="Ingrese su Usuario" style="text-transform:lowercase">
+                                       </div> 
+                                        <button type="submit" class="btn btn-lg btn-success btn-block">Enviar Correo</button>
+                                    </form>
+                                    </div>
+                                    <div class="tab-pane fade" id="profile">
+                                    <form role="form" method="POST" autocomplete="off">{% csrf_token %}
+                                        <div class="form-group">
+                                            <label for="inputCorreo">Documento de indentidad</label>
+                                            <input type="number" class="form-control" id="usu_recuperacion_id" name="usu_recuperacion_id" placeholder="Ingrese su numero de documento">
+                                        </div> 
+                                        <button type="submit" class="btn btn-lg btn-success btn-block">Enviar Correo</button>
+                                    </form>    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+                    <div class="form-group">
+                      <a href="{% url 'menu_aplicaciones' %}"><button  class="btn btn-warning"><span class="fa fa-arrow-left"></span> Regresar al Login.. </button></a>
+                    </div>
+                    <!-- FIN Acordeon-->                
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}      
+
+<script type="text/javascript">      
+    // $(document).change(function(){
+    //     var n = $('#select').val();
+    //     alert(n);
+    //     if(n == 'correo'){
+    //         $('#correo').removeAttr("style");
+    //         $('#identidad').Attr("style");
+    //     }else{
+    //         $('#identidad').removeAttr("style");
+    //         $('#correo').Attr("style");
+    //     }
+    // });        
+</script>
+{% endblock %}    

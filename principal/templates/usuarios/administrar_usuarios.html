@@ -1,0 +1,244 @@
+{% extends 'dashboard/base_autenticado.html' %}
+<!-- {% load static %} -->
+{% block navegacion %}
+{% endblock %}
+{% block contenido %}
+	<!-- nuevas tablas plantilla abelardo mendoza -->
+	<div id="page-wrapper">
+     	<div class="row">
+            <br>
+            <div class="col-md-8 text-left">
+                <a href="{% url 'menu_aplicaciones' %}"><button  class="btn btn-dark"><span class="fa fa-arrow-left"></span> Atras </button></a>
+            </div>
+            <div class="col-md-4 text-right">
+            	<a href="{% url 'agregar_usuario' %}"  class="btn btn-success" role="button" aria-pressed="true"><span class="fa fa-child"></span> Crear Usuario</a>
+            </div>
+        </div>
+            <!--Fin Botones-->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Administración de Usuarios</h1>
+            </div>            
+            <!-- /.col-lg-12 -->
+        </div>
+         <div class="row">
+            <div class="text-right">
+                <input type="checkbox" id="ver">
+
+            </div>
+            <br>
+        </div>
+       {% include 'dashboard/alertas.html' %}
+        <div class="row">
+            <div class="well hidden">
+                <h4>DataTables Usage Information</h4>
+                <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at </p>
+            </div>
+        </div>
+        <!-- /.row -->
+        {% if usuarios %}
+             <div class="row esto" id="fila1">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-right">
+                            <!-- <a class=" btn btn-warning text-muted select-all" href="#" data-toggle="tooltip" data-placement="top" title="Seleccionar todos"><i class="fa fa-check"></i></a> -->
+							<!-- <a class="btn btn-danger" href="" id="eliminar-seleccionados" onclick="return confirm('¿Está seguro que desea eliminar el/los usuarios seleccionadas ?')" class="text-muted" data-toggle="tooltip" data-placement="top" title="Borrar seleccionados"><i class="fa fa-trash"></i></a> -->
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table  table-bordered table-hover dataTables" id="dataTables">
+                                <thead>
+                                    <tr>
+                                    	<!-- <th width="8%">OP</th> -->
+                                        <th>NOMBRE USUARIO</th>
+                                        <th>IDENTIFICACION</th>
+                                        <th>NOMBRE COMPLETO</th>
+                                        <th>EMAIL</th>
+                                        <th>EMPRESA</th>
+                                        <th>EDITAR</th>
+                                        <th>DETALLES</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	{% for us in usuarios %}
+	                                    <tr  {% if not us.activo %} bgcolor='FF9999' {% endif %} class="odd gradeX">
+	                                    	{% if us.activo %}
+	                                    		<td><input  name="filas_seleccionadas" type="checkbox" value="{{ us.pk }}"/> 
+                                                    <a class="opciones_usuarios" accion="eliminar" usuario="{{ us.pk }}" ><span class="fa fa-trash"></span></a>
+	                                    			 <!-- <a  href="{% url 'eliminar_usuario' us.pk %}"  class="text-muted" data-toggle="tooltip" data-placement="top" title="Borrar Usuario"><i class="fa fa-trash"></i></a> -->{{ us.usuario.username }}
+	                                    		</td>
+	                                    	{% else %}
+	                                    		<td>
+                                                    <a class="opciones_usuarios" accion="reactivar" usuario="{{ us.pk }}" ><span class="fa fa-check"></span></a>
+	                                    			<!-- <a href="{% url 'reactivar_usuario' us.pk %}" onclick="return confirm('¿Está seguro que desea reactivar el  usuario seleccionadas ?')" class="text-muted" data-toggle="tooltip" data-placement="top" title="Reactivar usuario"><i class="fa fa-check"></i></a>  -->{{ us.usuario.username }}
+	                                    		</td>
+	                                    	{% endif %}
+	                                        <!-- <td>{{ us.usuario.username }}</td> -->
+	                                        <td>{{ us.identificacion }}</td>
+	                                        <td>{{ us.nombre }}</td>
+	                                        <td>{{ us.email }}</td>
+	                                        <td>{{ us.empresa.razon_social_empresa }}</td>
+	                                       {% if us.activo %}
+		                                        <td class="text-center">
+		                                            <button class="btn btn-primary opciones_usuarios" accion="editar" usuario="{{ us.pk }}" ><span class="fa fa-pencil-square"></span> Editar</button>		                                         
+		                                        </td>
+		                                        <td class="text-center">
+		                                            <button class="btn btn-info opciones_usuarios" accion="detalles" usuario="{{ us.pk }}" ><span class="fa fa-ellipsis-v"></span> Detalles</button>
+		                                        </td>	
+		                                    {% else %}    
+		                                    	<td align="center"><strong>Inactivo</strong></td>
+		                                    	<td align="center"><strong>Inactivo</strong></td>
+		                                    {% endif %}                                         
+	                                    </tr>
+	                                {% endfor %}	                                   
+                                </tbody>
+                            </table>
+                            <!-- usaurios desactivados -->                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row hide esto" id="fila2">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-right">
+                            <!-- <a class=" btn btn-warning text-muted select-all" href="#" data-toggle="tooltip" data-placement="top" title="Seleccionar todos"><i class="fa fa-check"></i></a> -->
+                            <!-- <a class="btn btn-danger" href="" id="eliminar-seleccionados" onclick="return confirm('¿Está seguro que desea eliminar el/los usuarios seleccionadas ?')" class="text-muted" data-toggle="tooltip" data-placement="top" title="Borrar seleccionados"><i class="fa fa-trash"></i></a> -->
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            
+                            <!-- usaurios desactivados -->
+                            <table width="100%" class="table  table-bordered table-hover dataTables" id="dataTables">
+                                <thead>
+                                    <tr>
+                                        <!-- <th width="8%">OP</th> -->
+                                        <th>NOMBRE USUARIO</th>
+                                        <th>IDENTIFICACION</th>
+                                        <th>NOMBRE COMPLETO</th>
+                                        <th>EMAIL</th>
+                                        <th>EMPRESA</th>
+                                        <th>EDITAR</th>
+                                        <th>DETALLES</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for us in usuarios_inactivos %}
+                                        <tr   bgcolor='FF9999'  class="odd gradeX">
+                                            
+                                            <td>
+                                                <a class="opciones_usuarios" accion="reactivar" usuario="{{ us.pk }}" ><span class="fa fa-check"></span></a>
+                                                {{ us.usuario.username }}
+                                            </td>
+                                            <td>{{ us.identificacion }}</td>
+                                            <td>{{ us.nombre }}</td>
+                                            <td>{{ us.email }}</td>
+                                            <td>{{ us.empresa.razon_social_empresa }}</td>                                             
+                                            <td align="center"><strong>Inactivo</strong></td>
+                                            <td class="text-center">
+                                                    <button class="btn btn-info opciones_usuarios" accion="detalles" usuario="{{ us.pk }}" ><span class="fa fa-ellipsis-v"></span> Detalles</button>
+                                                </td>
+                                        </tr>
+                                    {% endfor %}                                       
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        	{% include 'dashboard/alertas.html' %}
+        {% endif %}
+   	
+   </div>
+
+   <!--  modal  -->
+     <!--  modal  -->
+   <div id="modal_usuarios">
+   	
+   </div>
+
+
+{% endblock %}	
+{% block extra_js %}
+    <script type="text/javascript"  src="{% static "js/form-list.js"%}"></script>
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+    </script>
+    <!--Traduccion de datatable-->
+     <script type="text/javascript">
+
+        $('.dataTables').dataTable( {
+            "language": {
+               //"url": "E:/Downloads/Irene/template/vendor/datatables/js/Spanish.json"
+              // "url": "../vendor/datatables/js/Spanish.json"
+                "sProcessing":     "Procesando...",
+                "sLengthMenu":     "Mostrar _MENU_ registros",
+                "sZeroRecords":    "No se encontraron resultados",
+                "sEmptyTable":     "Ningún dato disponible en esta tabla",
+                "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix":    "",
+                "sSearch":         "Buscar:",
+                "sUrl":            "",
+                "sInfoThousands":  ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":     "Último",
+                    "sNext":     "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+             }
+         });
+        $(".opciones_usuarios").on("click",function(){
+	   		var aux_accion = $(this).attr("accion");
+	   		var aux_id = $(this).attr("usuario");
+	   		console.log("mire las variables"+aux_accion+","+aux_id);
+	   		$.ajax({
+	   			type:"GET",   			
+	   			url:"/usuarios/ver_modal_usuarios/"+aux_id+"/",
+	   			data:{ "accion_r":aux_accion},
+	   			success: function(respose){
+	   				$("#modal_usuarios").html(respose);
+	   				$("#modal_usuarios .modal").modal("show");
+	   			}
+	   		})
+   		});
+    </script>
+    <!-- Cambio de tablas  -->
+    <script>
+      $(function() {
+        $('#ver').bootstrapToggle({
+          on: 'Activos',
+          off: 'Inactivos'
+        });
+      })
+    </script>
+
+    <script type="text/javascript">
+        $('#ver').change(function(){
+            $(".esto").toggle(
+                function(){
+                    $('#fila1').addClass("hide");
+                },function(){
+                    $('#fila2').removeClass("hide");
+                });
+        });
+    </script>
+    <!-- Fin Cambio de tablas  -->
+
+{% endblock %}
+  
+  

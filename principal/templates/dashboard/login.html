@@ -1,0 +1,68 @@
+{% extends 'dashboard/base_nologin.html' %}
+{% load static %}
+
+{% block titulo %}
+ Acceder
+{% endblock %}
+
+{% block extra_head %}
+{% endblock %}
+
+{% block contenido %}
+    <!-- login plantilla abelardo --> 
+   
+    <div class="container">  
+        <div class="row text-center">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><center><b>BIENVENIDO A SIGI</b></center></h3>
+                    </div>
+                    <div class="panel-body">
+                        <img src="../../static/images/enel.png" class="img-thumbnail"><br><br>
+                        {% include 'dashboard/alertas.html' %}
+                        <form role="form" method="POST" autocomplete="off">{% csrf_token %}
+                            <fieldset>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Ingresar  Usuario" name= "nombre_de_usuario" id="nombre_de_usuario" required="required" autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Ingresar  Contaseña"  name= "clave" id="clave" required="required">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="checkdir_activo" name="checkdir_activo" value="1"> Usuarios ENEL                                       
+                                    </label>
+                                </div>
+                                <div id="div_rec_contrasena" class="form-group" style="display:hidden;">
+                                    <a href="{% url 'recuperar_contrasena' %}">Recuperar tu contraseña</a>
+                                </div>
+                                <!-- Change this to a button or input when using this as a form -->
+                                <!-- <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a> -->
+                                <button class="btn btn-lg btn-success btn-block"><span class="fas fa-paper-plane"></span> Iniciar Sesion</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+{% endblock %}
+{% block extra_js %}  
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+      $('#checkdir_activo').on('change',function(){
+        if (this.checked) {
+            // $("#clave").attr('readonly','readonly');
+            $("#div_rec_contrasena").hide();
+        } else {
+            // $("#clave").removeAttr('readonly');
+            $("#div_rec_contrasena").show();
+        }  
+      })
+    });  
+
+
+</script>
+{% endblock %} 

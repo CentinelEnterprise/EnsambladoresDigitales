@@ -1,0 +1,260 @@
+{% load staticfiles %}
+{% load static %}
+{% block extra_head %}
+  <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/chosen.min.css"> -->
+{% endblock %}
+{% load humanize %}
+<div class="modal fade" id="modal_perfiles" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <!-- <form class="formulario" role="form" method="POST">{% csrf_token %} -->
+  	<div class="modal-dialog modal-md">
+    	<div class="modal-content">        
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          {% if modificar %}
+            <h4 class="modal-title" id="myModalLabel">MODIFICAR USUARIO ({{ usuario_mod.nombre }})</h4> 
+          {% elif detalles_m %}
+            <h4 class="modal-title" id="myModalLabel">DETALLES USUARIO</h4>
+          {% elif eliminar_m %}
+            <h4 class="modal-title" id="myModalLabel">ELIMINAR USUARIO</h4>
+          {% elif reactivar_m %}
+            <h4 class="modal-title" id="myModalLabel">REACTIVAR USUARIO</h4>
+          {% endif %}  
+        </div>
+        <div class="modal-body" id="modal-body-contactos">              
+          {% if modificar %}               
+            <div class="row">
+              <div class="col-lg-12">
+                <form class="formulario" role="form" method="POST">{% csrf_token %}
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          Informacion Usuario
+                      </div>
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="clave">Número de Documento</label>
+                                    <input type="text" class="form-control input-sm input-sm numeric" maxlength="10" id="numero_documento" name="numero_documento" {% if modificar %} value="{{ usuario_mod.identificacion }}"  {% endif %} required>
+                                  </div>
+                                </div>
+                                <div class="col-md-8">
+                                  <div class="form-group">
+                                    <label for="clave">Nombre</label>
+                                    <input type="text" class="form-control input-sm characters" id="primer_nombre" name="primer_nombre" {% if modificar %} value="{{ usuario_mod.nombre }}" {% endif %} required>
+                                  </div>
+                                </div>
+                               
+                              </div>
+                              <div class="row">                           
+                                 
+                              </div>
+                              <div class="row">
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="clave">Correo Electrónico</label>
+                                    <input type="email" class="form-control input-sm" id="correo" name="correo" {% if modificar %} value="{{ usuario_mod.email }}" {% endif %} required>
+                                  </div>
+                                </div>                                        
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="sel_empresa">Empresa</label>
+                                    <select class="form-control input-sm chosen-select" id="empresa_usuario" name="empresa_usuario">
+                                      <option></option>                                           
+                                      {% for e in empresas %}
+                                          {% if modificar %}                                                      
+                                            {% ifequal e usuario_mod.empresa %}
+                                              <option selected="true" value="{{ e.id }}"> {{ e }}</option>
+                                            {% else %}
+                                              <option  value="{{ e.id }}"> {{ e }}</option>
+                                            {% endifequal %}
+                                          {% else %}
+                                            <option value="{{ e.id }}"> {{ e }}</option>
+                                          {% endif %}
+                                      {% endfor %}                                                
+                                    </select>
+                                  </div>
+                                </div>                                     
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label for="sel_tipo_perfil">Prefil del Usuario</label>
+                                    <select class="form-control input-sm chosen-select" id="sel_tipo_perfil" name="sel_tipo_perfil">
+                                      <option></option>
+                                      {% for p in perfiles %}
+                                        {% if modificar %}                                                     
+                                          {% ifequal p usuario_mod.tipo_perfil %}
+                                            <option selected="true" value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
+                                          {% else %}
+                                            <option value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
+                                          {% endifequal %}                                                        
+                                        {% else %}
+                                          <option value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
+                                        {% endif %}     
+                                      {% endfor %}                        
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                        </div>    
+                      </div>
+                      <div class="modal-footer">
+                        <!-- <a id="agregar_registro" class="btn btn-success informe" accion="ingreso" name="guardar"><i class="fa fa-save"></i> Guardar</a> -->
+                        <a  class="btn btn-success modificar" accion="{{ usuario_mod.pk }}"><span class="fas fa-save"></span> Guardar</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_contacto_m" >Cerrar</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>               
+          {% elif detalles_m %}
+             <div class="row">
+                <div class="col-md-12">                    
+                  <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">USUARIO LOGIN</th>
+                          <th scope="col">IDENTIFICACION</th>
+                          <th scope="col">NOMBRE USUARIO</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ usuario_mod.usuario.username }}</td>
+                          <td>{{ usuario_mod.identificacion|upper}}</td>
+                          <td>{{ usuario_mod.nombre|upper}}</td>
+                        </tr>
+                      </tbody>
+                      <thead>
+                        <tr>
+                          <th scope="col">EMAIL</th>
+                          <th scope="col">EMPRESA</th>
+                          <th scope="col">TIPO PERFIL</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{{ usuario_mod.email|upper}}</td>
+                          <td>{{ usuario_mod.empresa.razon_social_empresa }}</td>
+                          <td>{{ usuario_mod.tipo_perfil.nombre_tipo_perfil }}</td>
+                        </tr>
+                      </tbody> 
+                      <thead>
+                        <tr>
+                          <th scope="col">FECHA CREACION</th>
+                          <th scope="col">FECHA MODIFICACIÓN</th>
+                          <th scope="col">FECHA BAJA</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>{% if usuario_mod.fecha_creacion %} {{ usuario_mod.fecha_creacion|date:"d/m/Y"}} {% else %} N.R {% endif %}</td>
+                          <td>{% if usuario_mod.fecha_modificacion %} {{ usuario_mod.fecha_modificacion|date:"d/m/Y"}} {% else %} N.R {% endif %}</td>
+                          <td>{% if usuario_mod.fecha_desactivacion %} {{ usuario_mod.fecha_desactivacion|date:"d/m/Y"}} {% else %} N.R {% endif %}</td>
+                        </tr>
+                      </tbody>                      
+                  </table>
+              </div>
+            </div>
+          </div>               
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_contacto_m" >Cerrar</button>
+          </div>
+        {% elif eliminar_m %}
+            <div class="row text-center">
+              <div class="col-lg-12">
+                <form class="formulario" role="form" method="POST">{% csrf_token %}
+                  <div class="panel panel-default">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="alert alert-warning fade in col-md-12" role="alert">
+                            <strong>Advertencia!</strong> {{ advertencia }} {{ usuario_mod }}
+                          </div>
+                         <!--  <form>
+                            <label>Ingese la fecha de eliminacion del usuario</label>
+                            <input type="date" name="fecha" class="form-control">
+                          </form> -->
+                        </div>    
+                      </div>
+                      <div class="modal-footer">                       
+                        <a class="btn btn-danger" href="{% url 'eliminar_usuario' usuario_mod.pk %}"><span class="fas fa-save"></span> Guardar</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_contacto_m" >Cerrar</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% elif reactivar_m %}
+            <div class="row">
+              <div class="col-lg-12">
+                <form class="formulario" role="form" method="POST">{% csrf_token %}
+                  <div class="panel panel-default">
+                      <div class="panel-body">
+                        <div class="row">
+                          <div class="alert alert-warning fade in col-md-12" role="alert">
+                            <strong>Advertencia!</strong> {{ advertencia }} {{ usuario_mod }}
+                          </div>
+                          <!-- <label class="text-center">Ingese la fecha de eliminacion del usuario</label> -->
+                          <!-- <input type="date" name="fecha" class="form-control"> -->
+                          <p>Date: <input type="text" id="datepicker"></p>
+
+                        </div>    
+                      </div>
+                      <div class="modal-footer">                       
+                        <a class="btn btn-danger" href="{% url 'reactivar_usuario' usuario_mod.pk %}"><span class="fas fa-save"></span> Guardar</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar_contacto_m" >Cerrar</button>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endif %}                
+    	</div>
+  	</div>
+  <!-- </form> -->
+</div>
+
+{% block extra_js %}
+
+<script  src="{% static "js/jquery-ui.min" %}"></script>
+<script type="text/javascript">
+  $(".modificar").on("click",function(){
+    var aux_accion = $(this).attr("accion");
+    console.log("mire las variables,"+aux_accion);
+    $.ajax({
+      type:"POST",         
+      url:"/usuarios/modificar_usuario/{{ usuario_mod.pk }}/",
+      data:{ "accion_r":aux_accion,"numero_documento":$("#numero_documento").val(),"primer_nombre":$("#primer_nombre").val(),"correo":$("#correo").val(),"empresa_usuario":$("#empresa_usuario").val() ,"sel_tipo_perfil":$("#sel_tipo_perfil").val(),"csrfmiddlewaretoken": getCookie("csrftoken")},
+      success: function(resp){
+        var url_to = "http://"+window.location.host+resp;
+        window.location= url_to;
+      }
+    })
+  });
+
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+
+
+</script>
+{% endblock %}
