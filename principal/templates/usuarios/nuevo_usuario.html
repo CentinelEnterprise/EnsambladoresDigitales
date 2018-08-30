@@ -5,207 +5,6 @@
 {% endblock %}
 {% block contenido %}
 	{% include "dashboard/alertas.html" %}
-	<!-- <form role="form" method="POST">{% csrf_token %}
-	<div class="container-fluid">
-		<div class="row justify-content-md-center">
-			<div class="col-md-12">
-				<div class="row">
-					<div class="col-xs-3">
-						<div class="form-group">
-							<label for="clave">Número de Documento</label>
-							<input type="text" class="form-control input-sm input-sm numeric" id="numero_documento" name="numero_documento" {% if modificar %} value="{{ usuario_mod.identificacion }}" readonly {% endif %} required>
-						</div>
-					</div>
-					<div class="col-xs-6">
-						<div class="form-group">
-							<label for="clave">Nombre de Usuario</label>
-							<input type="text" class="form-control input-sm no-spaces" id="clave" name="nombre_de_usuario" {% if modificar %} value="{{ usuario_mod.usuario }}" readonly {% endif %} required>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-3">
-						<div class="form-group">
-							<label for="clave">Nombre</label>
-							<input type="text" class="form-control input-sm characters" id="clave" name="primer_nombre" {% if modificar %} value="{{ usuario_mod.nombre }}" {% endif %} required>
-						</div>
-					</div>
-					<div class="col-xs-3">
-						<div class="form-group">
-							<label for="clave">Contraseña</label>
-							<input type="password" class="form-control input-sm no-spaces" id="clave" name="clave" {% if modificar %} value="{{ usuario_mod.password }}" {% endif %} required>
-						</div>
-					</div>
-					<div class="col-xs-3">
-						<div class="form-group">
-							<label for="clave">Confirmar Contraseña</label>
-							<input type="password" class="form-control input-sm no-spaces" id="clave" {% if modificar %} value="{{ usuario_mod.password }}" {% endif %} name="c_clave" required>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-4">
-						<div class="form-group">
-							<label for="clave">Correo Electrónico</label>
-							<input type="email" class="form-control input-sm" id="clave" name="correo" {% if modificar %} value="{{ usuario_mod.email }}" {% endif %} required>
-						</div>
-					</div> -->
-					<!-- <div class="col-xs-4">
-						<div class="form-group">
-							<label for="clave">Empresa</label>
-							<input type="text" class="form-control input-sm" id="empresa_usuario" name="empresa_usuario" value="{{ numero_telefonico }}" required>
-						</div>
-					</div> -->
-					<!-- <div class="col-xs-4">
-						<div class="form-group">
-						  <label for="sel_empresa">Empresa</label>
-						  <select class="form-control input-sm chosen-select" id="empresa_usuario" name="empresa_usuario">
-						    <option></option>						    
-					    	{% for e in empresas %}
-					    		{% if modificar %}					    		
-					    		 	{% ifequal e usuario_mod.empresa %}
-					    		 		<option selected="true" value="{{ e.id }}"> {{ e }}</option>
-					    		 	{% else %}
-					    		 		<option  value="{{ e.id }}"> {{ e }}</option>
-					    		 	{% endifequal %}
-						    	{% else %}
-						    		<option value="{{ e.id }}"> {{ e }}</option>
-						    	{% endif %}
-						    {% endfor %}						     
-						  </select>
-						</div>
-					</div> -->
-					<!-- <div class="col-xs-6">
-						<div class="form-group">
-							<label for="elementos_seleccionados">Perfiles Seleccionados</label>
-							<select class="form-control input-sm chosen-select" multiple="true" id="grupos_seleccionados" name="grupos_seleccionados" data-placeholder="Seleccione los grupos al que pertenece el Usuario.">
-							{% for grupo in perfiles %}
-								<option value="{{ grupo.pk }}">{{ grupo.nombre_perfil }}</option>
-							{% endfor %}
-							</select>
-						</div>
-					</div> -->
-					<!-- <div class="col-xs-4">
-						<div class="form-group">
-						  <label for="sel_tipo_perfil">Prefil del Usuario</label>
-						  <select class="form-control input-sm chosen-select" id="sel_tipo_perfil" name="sel_tipo_perfil">
-						    <option></option>
-						   	{% for p in perfiles %}
-						   		 {% if modificar %}					    		
-					    		 	{% ifequal p usuario_mod.tipo_perfil %}
-					    		 		<option selected="true" value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
-					    		 	{% else %}
-					    		 		<option value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
-					    		 	{% endifequal %}					    		
-						    	{% else %}
-						    		<option value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
-						    	{% endif %}	
-						    {% endfor %}			    
-						  </select>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<button type="submit" class="btn btn-primary btn-center">Guardar</button>
-	</form> -->
-	<!-- <form class="formulario" role="form" method="POST">{% csrf_token %}
-        <div class="container-fluid">
-            <div class="row">
-                    <div class="col-md-12">
-                            <div class="row">
-                                    <div class="col-md-6">
-                                            <div class="form-group">
-                                                    <label for="clave">Número de Documento</label>
-                                                    <input type="numeric" class="form-control input-sm input-sm numeric" id="numero_documento" name="numero_documento" {% if modificar %} value="{{ usuario_mod.identificacion }}" readonly {% endif %} required>
-                                            </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                            <div class="form-group">
-                                                    <label for="clave">Nombre de Usuario</label>
-                                                    <input type="text" class="form-control input-sm no-spaces" id="clave" name="nombre_de_usuario" {% if modificar %} value="{{ usuario_mod.usuario }}" readonly {% endif %} required>
-                                            </div>
-                                    </div>
-                            </div>
-                            <div class="row">
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                                    <label for="clave">Nombre</label>
-                                                    <input type="text" class="form-control input-sm characters" id="clave" name="primer_nombre" {% if modificar %} value="{{ usuario_mod.nombre }}" {% endif %} required>
-                                            </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                                    <label for="clave">Contraseña</label>
-                                                    <input type="password" class="form-control input-sm no-spaces" id="clave" name="clave" {% if modificar %} value="{{ usuario_mod.password }}" {% endif %} required>
-                                            </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                                    <label for="clave">Confirmar Contraseña</label>
-                                                    <input type="password" class="form-control input-sm no-spaces" id="c_clave" {% if modificar %} value="{{ usuario_mod.password }}" {% endif %} name="c_clave" required>
-                                            </div>
-                                    </div>
-                            </div>
-                            <div class="row">
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                                    <label for="clave">Correo Electrónico</label>
-                                                    <input type="email" class="form-control input-sm" id="clave" name="correo" {% if modificar %} value="{{ usuario_mod.email }}" {% endif %} required>
-                                            </div>
-                                    </div>
-                                    
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                              <label for="sel_empresa">Empresa</label>
-                                              <select class="form-control input-sm chosen-select" id="empresa_usuario" name="empresa_usuario">
-                                                <option></option>                                           
-                                            {% for e in empresas %}
-                                                    {% if modificar %}                                                      
-                                                            {% ifequal e usuario_mod.empresa %}
-                                                                    <option selected="true" value="{{ e.id }}"> {{ e }}</option>
-                                                            {% else %}
-                                                                    <option  value="{{ e.id }}"> {{ e }}</option>
-                                                            {% endifequal %}
-                                                    {% else %}
-                                                            <option value="{{ e.id }}"> {{ e }}</option>
-                                                    {% endif %}
-                                                {% endfor %}                                                
-                                              </select>
-                                            </div>
-                                    </div>
-                                 
-                                    <div class="col-md-4">
-                                            <div class="form-group">
-                                              <label for="sel_tipo_perfil">Prefil del Usuario</label>
-                                              <select class="form-control input-sm chosen-select" id="sel_tipo_perfil" name="sel_tipo_perfil">
-                                                <option></option>
-                                                    {% for p in perfiles %}
-                                                             {% if modificar %}                                                     
-                                                            {% ifequal p usuario_mod.tipo_perfil %}
-                                                                    <option selected="true" value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
-                                                            {% else %}
-                                                                    <option value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
-                                                            {% endifequal %}                                                        
-                                                    {% else %}
-                                                            <option value="{{ p.id }}"> {{ p.nombre_tipo_perfil }}</option>
-                                                    {% endif %}     
-                                                {% endfor %}                        
-                                              </select>
-                                            </div>
-                                    </div>
-                            </div>
-                    </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <button type="submit" class="btn btn-primary"><span class="fas fa-save"></span> Guardar</button>
-            </div>           
-        </div>
-        </form> -->
-
 	<div id="page-wrapper">
       <div class="row">
         <br>
@@ -231,13 +30,23 @@
                   	<div class="row">
                    		<div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <label for="clave">Número de Documento</label>
-                                        <input type="number" maxlength="10" class="form-control input-sm numeric" id="numero_documento" name="numero_documento" required>
+                                      <label for="sel_tipo_usuario">Prefil del Usuario</label>
+                                      <select class="form-control input-sm chosen-select" id="sel_tipo_usuario" name="sel_tipo_usuario" required>
+                                        <option></option> 
+                                        <option value="1">Aplicacion</option>
+                                        <option value="2">Directorio Activo</option>           
+                                      </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label for="clave">Número de Documento</label>
+                                        <input type="text" maxlength="10" class="form-control input-sm numeric" id="numero_documento" name="numero_documento" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
                                     <div class="form-group">
                                         <label for="clave">Usuario Login</label>
                                         <input type="text" class="form-control input-sm no-spaces" id="nombre_de_usuario" name="nombre_de_usuario"  required>
@@ -276,9 +85,9 @@
                                     <div class="form-group">
                                       <label for="sel_empresa">Empresa</label>
                                       <select class="form-control input-sm chosen-select" id="empresa_usuario" name="empresa_usuario">
-                                        <option></option>                                    
+                                        <option></option>                                
                                     	{% for e in empresas %}
-                                            {% if modificar %}                                                      
+                                            {% if modificar %}                                            
                                                     {% ifequal e usuario_mod.empresa %}
                                                             <option selected="true" value="{{ e.id }}"> {{ e }}</option>
                                                     {% else %}

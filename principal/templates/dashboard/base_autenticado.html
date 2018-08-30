@@ -71,7 +71,12 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="{% url 'pagina_construccion' %}"><i class="fa fa-table fa-fw"></i> Gestion de Proyectos</a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> Gestión de Proyectos<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">                                
+                                <li>
+                                    <a href="{% url 'administracion_proyectos' %}"><span class="fas fa-group"></span> Proyectos</a>
+                                </li>         
+                            </ul>
                         </li>
                         <li>
                             <a href="{% url 'pagina_construccion' %}"><i class="fa fa-edit fa-fw"></i> Gestion de Resultados</a>

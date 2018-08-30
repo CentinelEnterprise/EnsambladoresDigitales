@@ -29,15 +29,20 @@ def acceder(request):
 		clave = request.POST['clave']
 		# ckeck_list = request.POST['checkdir_activo']		
 		print nombre_de_usuario,'mire el nombre que trae'
-		print clave, 'mire la clave que trae'
-		
+		print clave, 'mire la clave que trae'		
 		#parte de la autenticacion 
 		if ckeck_list != 1 : 
 			usuario = authenticate(username=nombre_de_usuario, password=clave)
 			print usuario,'resultado del autecticar'
 			if usuario is not None and usuario.is_active:
 				login(request, usuario)
-				return HttpResponseRedirect(to)
+				# return HttpResponseRedirect(to)
+				""" parte que voy a utilizar para validar el primer login"""
+				if not usuario.is_superuser and not validad_primero_login(usuario.pk):
+					primer_login = True
+					return HttpResponseRedirect('/usuarios/configuracion')
+				else:	
+					return HttpResponseRedirect(to)
 			else:
 				error = 'El usuario o contraseña es/son incorrectos, vuelva a intentar'
 				print 'error'
@@ -45,8 +50,7 @@ def acceder(request):
 			usuario = authenticate(username=nombre_de_usuario)
 			print usuario,'resultado del autecticar por correo activo '
 			if usuario is not None and usuario.is_active:
-				login(request, usuario)
-				return HttpResponseRedirect(to)
+				login(request, usuario)				
 			else:
 				error = 'El usuario no esta en el directorio activo, vuelva a intentar'
 				print 'error'
@@ -59,6 +63,15 @@ def acceder(request):
 def cerrar_sesion(request):
 	logout(request)
 	return HttpResponseRedirect('/usuarios/acceder')
+
+def validad_primero_login(usuario_id):
+	logion_n = True
+	print usuario_id,'este es el valor que ingreso al metodo'
+	usuario_s = Usuario.objects.get(usuario__id=usuario_id)
+	if usuario_s.primer_login:
+		logion_n = False
+
+	return logion_n
 
 """ Fin Autenticacion """
 
@@ -91,8 +104,11 @@ def configuracion(request):
 					print error
 				else:
 					if nueva_clave == c_nueva_clave:
-						usuario.set_password(nueva_clave)
+						usuario.set_password(nueva_clave)						
 						usuario.save()
+						usuario_sistemas = Usuario.objects.get(usuario__id=usuario.pk)
+						usuario_sistemas.primer_login = False
+						usuario_sistemas.save()
 						ok = 'la Contraseña actualizada correctamente.'
 						# return HttpResponseRedirect('/usuarios/ver_perfil_usuario/?ok='+ok)
 						print ok
@@ -211,8 +227,8 @@ def administracion_usuarios(request):
 
 
 def agregar_usuarios(request):
-	perfiles = TipoPerfil.objects.all()
-	empresas = Empresa.objects.all()
+	perfiles = TipoPerfil.objects.filter(activo=True)
+	empresas = Empresa.objects.filter(activo=True)
 	print perfiles,'esta entrando'
 	if not perfiles:
 		advertencia = 'No se encuentran perfiles registrados. No podra agregar un usuario nuevo mientras no exitan perfiles.'
@@ -226,6 +242,7 @@ def agregar_usuarios(request):
 		correo_n =  request.POST['correo']
 		empresa_n  = int(request.POST['empresa_usuario'])
 		tipo_perfil  = int(request.POST['sel_tipo_perfil'])
+		tipo_usuario  = int(request.POST['sel_tipo_usuario'])
 		# grupos_seleccionados = request.POST.getlist('grupos_seleccionados')
 		if clave == c_clave:
 			usuario_sys = User()
@@ -246,6 +263,7 @@ def agregar_usuarios(request):
 			nuevo_usuario.empresa = Empresa.objects.get(id=empresa_n)
 			nuevo_usuario.tipo_perfil = TipoPerfil.objects.get(id=tipo_perfil)
 			nuevo_usuario.fecha_modificacion = datetime.now()
+			nuevo_usuario.tipo_empresa = tipo_usuario
 			nuevo_usuario.save()
 			ok = 'El usuario ha sido creado.'
 			return HttpResponseRedirect('/usuarios/administrar_usuarios/?ok='+ok)		
