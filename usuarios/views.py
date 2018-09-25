@@ -609,7 +609,7 @@ def administracion_grupos(request):
 	ok = request.GET.get('ok', False)
 	grupos = Group.objects.all()
 	if len(grupos) == 0:
-		advertencia = "No hay grupos registradas"	
+		advertencia = "No hay datos registrados"	
 	return render(request,'usuarios/administrar_grupos.html', locals())
 
 @login_required

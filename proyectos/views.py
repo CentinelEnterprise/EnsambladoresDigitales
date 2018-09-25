@@ -10,19 +10,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
-from usuarios.models import *
+from proyectos.models import *
 
 
 """ PARTE PARA LA GESTION DE LOS PROYECTOS ------------------------------------------------------------"""
 
 def administracion_proyectos(request):
-	error = request.GET.get('error', False)
-	ok = request.GET.get('ok', False)	
-	perfiles = TipoPerfil.objects.filter(activo=True)
-	perfiles_inactivos = TipoPerfil.objects.filter(activo=False)
-	if len(perfiles) == 0:
-		advertencia = "No hay perfiles registrados"
-	return render(request,'usuarios/administrar_perfiles.html',locals())
+	# error = request.GET.get('error', False)
+	# ok = request.GET.get('ok', False)	
+	# perfiles = TipoPerfil.objects.filter(activo=True)
+	# perfiles_inactivos = TipoPerfil.objects.filter(activo=False)
+	# if len(perfiles) == 0:
+	advertencia = "No hay proyectos registrados"
+	return render(request,'proyectos/administrar_proyectos.html',locals())
 
 
 def agregar_proyectos(request):	

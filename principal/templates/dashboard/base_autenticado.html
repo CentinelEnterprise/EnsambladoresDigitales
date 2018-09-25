@@ -1,5 +1,5 @@
 {% extends 'dashboard/base.html' %}
-
+{% load staticfiles %}
 
 {% block pre_contenido %}
   <!-- nueva version plantilla abelardo--------------------------------------------------------------------------------------------------------- -->
@@ -13,7 +13,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'menu_aplicaciones' %}"><b>S I G I</b></a>
+                <a class="navbar-brand" href="{% url 'menu_aplicaciones' %}"><b>Air Quality System</b></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -59,19 +59,19 @@
                                     <a href="{% url 'administracion_perfiles' %}"><span class="fas fa-group"></span> Perfiles</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'administracion_empresas' %}" ><span class="fa fa-briefcase"></span> Empresas</a>
+                                    <a href="{% url 'administracion_empresas' %}" ><span class="fa fa-briefcase"></span> Universidad</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'administracion_grupos_usuarios' %}"><span class="fas fa-group"></span> Grupos y Permisos</a>
+                                    <a href="{% url 'administracion_grupos_usuarios' %}"><span class="fas fa-group"></span> Datos Arduino</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'administracion_usuarios' %}"><span class="fa fa-user-circle"></span> Usuarios</a>
+                                    <a href="{% url 'administracion_usuarios' %}"><span class="fa fa-user-circle"></span> Reportes</a>
                                 </li>                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i> Gestión de Proyectos<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-table fa-fw"></i> Reportes<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">                                
                                 <li>
                                     <a href="{% url 'administracion_proyectos' %}"><span class="fas fa-group"></span> Proyectos</a>

@@ -16,3 +16,4 @@ def menu_aplicaciones(request):
 def pagina_blanco(request):
 	error =  'la pagina se encuentra en desarrollo'
 	return render(request,'dashboard/blank.html', locals())
+ 
